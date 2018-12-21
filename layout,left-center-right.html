@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>圣杯布局5种方式</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .left, .center, .right {
+      min-height: 100px;
+    }
+    .container {
+      margin-top: 20px;
+    }
+    .left, .right {
+      width: 300px;
+    }
+    .left {
+      background: red;
+    }
+    .right {
+      background: gold;
+    }
+    .center {
+      background: skyblue;
+    }
+  </style>
+</head>
+<body>
+  <!-- 高度已知 100px, 实现 左--300px宽  中--自适应  右--300px宽  布局 -->
+
+  <!-- 1. 第一种方法使用 float 浮动方案 -->
+  <section class="layout float">
+    <style>
+      .layout.float .left {
+        float: left;
+      }
+      .layout.float  .right {
+        float: right;
+      }
+    </style>
+    <div class="container">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="center"><h1>float方案</h1></div>
+    </div>
+  </section>
+
+  <!-- 2. 第二种方法使用 absolute 定位方案 -->
+  <section class="layout absolute">
+    <style>
+      .layout.absolute .container {
+        position: relative;
+      }
+      .layout.absolute .left {
+        position: absolute;
+        left: 0;
+      }
+      .layout.absolute .right {
+        position: absolute;
+        right: 0;
+      }
+      .layout.absolute .center {
+        position: absolute;
+        left: 300px;
+        right: 300px;
+      }
+    </style>
+    <div style="height: 100px;">
+      <div class="container">
+          <div class="left"></div>
+          <div class="center"><h1>absolute方案</h1></div>
+          <div class="right"></div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 3. 第三种方法使用 flex box 方案 -->
+  <section class="layout flexbox">
+    <style>
+      .layout.flexbox {
+        margin-top: 20px;
+      }
+      .layout.flexbox .container {
+        display: flex;
+      }
+      .layout.flexbox .center {
+        flex: 1;
+      }
+    </style>
+    <div class="container">
+      <div class="left"></div>
+      <div class="center"><h1>Flex box 方案</h1></div>
+      <div class="right"></div>
+    </div>
+  </section>
+
+  <!-- 4. 第四种方法使用 table 布局方案 -->
+  <section class="layout table">
+    <style>
+      .layout.table .container {
+        width: 100%;
+        display: table;
+        min-height: 100px;
+      }
+      .layout.table .container>div {
+        display: table-cell;
+      }
+    </style>
+    <div class="container">
+      <div class="left"></div>
+      <div class="center"><h1>Table 方案</h1></div>
+      <div class="right"></div>
+    </div>
+  </section>
+
+  <!-- 5. 第五种使用 css3 grid 布局方案 -->
+  <section class="layout grid">
+    <style>
+      .layout.grid .container {
+        display: grid;
+        grid-template-rows: 100px;
+        grid-template-columns: 300px auto 300px;
+      }
+    </style>
+    <div class="container">
+      <div class="left"></div>
+      <div class="center"><h1>Grid方案</h1></div>
+      <div class="right"></div>
+    </div>
+  </section>
+</body>
+</html>

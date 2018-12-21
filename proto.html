@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>原型链</title>
+</head>
+<body>
+  <script>
+    // 第一种方式
+    var o1 = { name: 'o1' }
+    var o2 = new Object({ name: 'o2' })
+    // 第二种 构造函数
+    function M(name) {
+      this.name = name
+    }
+    M.prototype.say = function () {
+      console.log('hi')
+    }
+    var o3 = new M('o3')
+    var o5 = new M('o5')
+    // 第三种方式 Object.create
+    var p = { name: 'p' }
+    var o4 = Object.create(p)
+
+    // new运算符的工作原理
+    // 1. 创建一个空对象，空对象关联构造函数的原型对象
+    // 2. 执行构造函数，并联系上下文（this）
+    // 3. 判断构造函数运行结果是否为 'object'
+    var new2 = function(func) {
+      var o = Object.create(func.prototype)
+      var k = func.call(o)
+      if(typeof k === 'object') {
+        return k
+      }else {
+        return o
+      }
+    }
+  </script>
+</body>
+</html>

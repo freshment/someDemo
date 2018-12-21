@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>面向对象</title>
+</head>
+<body>
+  <script>
+    /**
+     * @类的声明
+     */
+    function Animal() {
+      this.name = 'name'
+    }
+
+    /**
+     * @ES6 中的class的声明
+     */
+    class Animal2 {
+      constructor() {
+        this.name = 'name2'
+      }
+    }
+
+    /**
+     *@实例化
+     */
+    console.log(new Animal(), new Animal2())
+
+
+    /**
+     *@借助构造函数实现继承  缺点：无法继承  Parent1 原型上的方法
+     */
+    function Parent1() {
+      this.name = 'parent1'
+    }
+
+    Parent1.prototype.say = function () { console.log('hi,Im parent1') }
+
+    function Child1() {
+      Parent1.call(this)  //apply
+      this.type = 'child1'
+    }
+
+    // console.log(new Child1)
+
+
+    /**
+     *@借助 原型链实现继承  缺点：共用父类对象值
+     */
+    function Parent2 () {
+      this.name = 'parent2',
+      this.play = [1, 2]
+    }
+
+    function Child2 () {
+      this.type = 'child2'
+    }
+
+    Child2.prototype = new Parent2()
+    const c1 = new Child2
+    const c2 = new Child2
+    // console.log(c1.play, c2.play)
+
+
+    /**
+     *@组合式继承   构造函数+原型链继承
+     *  缺点： 父类构造函数执行了两次
+     */
+    function Parent3 () {
+      this.name = 'parent3'
+      this.play = [1, 2]
+    }
+    Parent3.prototype.say = function() { console.log('hi Im parent3') }
+
+
+    function Child3 () {
+      Parent3.call(this)
+      this.type = 'child3'
+    }
+    Child3.prototype = new Parent3()
+
+    var s1 = new Child3()
+    var s2 = new Child3()
+    console.log(s1.play, s2.play)
+    s1.play.pop()
+
+
+    /**
+     *@优化1 组合式继承   构造函数+原型链继承
+     *  这样优化的缺点 子类实例.__proto__.constructor === 父类构造函数
+     */
+    function Parent4 () {
+      this.name = 'parent4'
+      this.play = [1, 2]
+    }
+    Parent4.prototype.say = function() { console.log('hi Im parent4') }
+
+
+    function Child4 () {
+      Parent4.call(this)
+      this.type = 'child4'
+    }
+    Child4.prototype = Parent4.prototype //优化 new Parent4 改为 Parent4.prototype
+
+    var a1 = new Child4
+    var a2 = new Child4
+
+
+    /**
+     *@优化2 组合式继承   构造函数+原型链继承 (完美写法！！！)
+     *  这样优化的缺点 子类实例.__proto__.constructor === 父类构造函数
+     */
+    function Parent5 () {
+      this.name = 'parent5'
+      this.play = [1, 2]
+    }
+    Parent5.prototype.say = function() { console.log('hi Im parent5') }
+
+
+    function Child5 () {
+      Parent5.call(this)
+      this.type = 'child5'
+    }
+    Child5.prototype = Object.create(Parent5.prototype)
+    //优化 使用 Object.create() 使用一个空对象隔离了父的原型 {}.__proto__: Parent5原型
+    // 但是 Child5 没用自己的 constructor  所以：
+    Child5.prototype.constructor = Child5
+
+    var q1 = new Child5
+    var q2 = new Child5
+
+  </script>
+</body>
+</html>
